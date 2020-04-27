@@ -1,61 +1,59 @@
 import * as PIXI from 'pixi.js';
-import { snapshot, equal } from '../src/snapshot';
+import { snapshot, equal } from '@canvest/canvest-core';
+import { Dragon } from '../src/dragon';
 
 describe('Background color', () => {
 
-	let app = null;
+	let rotate1dot5Snapshot = null;
 
-	before(()=>{
-		app = new PIXI.Application({
-			width: 50, height: 50, backgroundColor: 0x1099bb,
+	it('should render the same', async () => {
+
+		const app = new PIXI.Application({
+			width: 800, height: 600, backgroundColor: 0x1099bb,
 			preserveDrawingBuffer: true
 		});
+
+		const container = new PIXI.Container();
+		container.width = 800;
+		container.height = 600;
+		const dragon = new Dragon(container);
+		app.stage.addChild(container);
+		dragon.update(1.5);
+
+		const renderNo1 = await snapshot(app.view);
+
+		const renderNo2 = await snapshot(app.view);
+
+		rotate1dot5Snapshot = renderNo2;
+
+		expect(equal(renderNo1, renderNo2)).to.equal(true);
 	});
 
+	it('should not render the same', async () => {
 
-	it('should render the same', () => {
+		const app = new PIXI.Application({
+			width: 800, height: 600, backgroundColor: 0x1099bb,
+			preserveDrawingBuffer: true
+		});
 
-		const tempcanvas = document.createElement('canvas');
-		tempcanvas.width = app.view.width;
-		tempcanvas.height = app.view.height;
-		let renderNo1 = null,
-			renderNo2 = null;
+		const renderNo1 = await snapshot(app.view);
 
-		setTimeout(()=>{
-			requestAnimationFrame(() => {
-				renderNo1 = snapshot(app.view, tempcanvas);
+		const container = new PIXI.Container();
+		container.width = 800;
+		container.height = 600;
+		const dragon = new Dragon(container);
+		app.stage.addChild(container);
+		dragon.update(0.0);
 
-				requestAnimationFrame(() => {
-					renderNo2 = snapshot(app.view, tempcanvas);
+		const renderNo2 = await snapshot(app.view);
 
-					expect(equal(renderNo1,renderNo2)).to.equal(true);
-					document.body.appendChild(tempcanvas);
-				});
-			});
-		},1000);
+		expect(equal(renderNo1, renderNo2)).to.equal(false);
 
-	});
+		dragon.update(1.5);
 
-	it('should not render the same', () => {
+		const renderNo3 = await snapshot(app.view);
 
-		const tempcanvas = document.createElement('canvas');
-		tempcanvas.width = app.view.width;
-		tempcanvas.height = app.view.height;
-		let renderNo1 = null,
-			renderNo2 = null;
+		expect(equal(renderNo3, rotate1dot5Snapshot )).to.equal(true);
 
-		setTimeout(()=>{
-			requestAnimationFrame(() => {
-				app.renderer.backgroundColor = 0xFF00FF;
-				renderNo1 = snapshot(app.view, tempcanvas);
-
-				requestAnimationFrame(() => {
-					renderNo2 = snapshot(app.view, tempcanvas);
-
-					document.body.appendChild(tempcanvas);
-					expect(equal(renderNo1,renderNo2)).to.equal(false);
-				});
-			});
-		},2000);
 	});
 });

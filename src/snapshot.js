@@ -6,7 +6,7 @@
 export function equal(a, b) {
 	if (a instanceof ArrayBuffer) a = new Uint8Array(a, 0);
 	if (b instanceof ArrayBuffer) b = new Uint8Array(b, 0);
-	if (a.byteLength != b.byteLength) return false;
+	if (a.byteLength !== b.byteLength) return false;
 	if (aligned32(a) && aligned32(b))
 		return equal32(a, b);
 	if (aligned16(a) && aligned16(b))
@@ -45,28 +45,33 @@ function aligned32(a) {
 	return (a.byteOffset % 4 === 0) && (a.byteLength % 4 === 0);
 }
 
-export const snapshot = (canvas, clone) => {
-	try {
-		if (clone) {
-			clone.width = canvas.width;
-			clone.height = canvas.height;
+export const snapshot = (canvas) => {
 
-			const canvasCtx = canvas.getContext('2d');
-			const cloneCtx = clone.getContext('2d');
+	return new Promise((resolve, reject)=>{
+		setTimeout(()=> {
+			try {
+					const tempCanvas = document.createElement('canvas');
+				tempCanvas.width = canvas.width;
+				tempCanvas.height = canvas.height;
 
-			if (!canvasCtx) {
-				cloneCtx.drawImage(canvas, 0, 0);
-			} else {
-				cloneCtx.putImageData(
-					canvasCtx.getImageData(0, 0, canvas.width, canvas.height),
-					0,
-					0,
-				);
+					const canvasCtx = canvas.getContext('2d');
+					const cloneCtx = tempCanvas.getContext('2d');
+
+					if (!canvasCtx) {
+						cloneCtx.drawImage(canvas, 0, 0);
+					} else {
+						cloneCtx.putImageData(
+							canvasCtx.getImageData(0, 0, canvas.width, canvas.height),
+							0,
+							0,
+						);
+					}
+
+					resolve(cloneCtx.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
+			} catch (e) {
+				reject(`snapshot canvas failed, ${e}`);
 			}
+		},100);
+	});
 
-			return cloneCtx.getImageData(0, 0, canvas.width, canvas.height).data.buffer;
-		}
-	} catch (e) {
-		console.error(`snapshot canvas failed, ${e}`);
-	}
 };
