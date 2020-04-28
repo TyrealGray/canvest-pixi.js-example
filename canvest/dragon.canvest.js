@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import { snapshot, equal } from '@canvest/canvest-core';
 import { Dragon } from '../src/dragon';
 
 describe('Background color', () => {
@@ -26,7 +25,7 @@ describe('Background color', () => {
 
 		rotate1dot5Snapshot = renderNo2;
 
-		expect(equal(renderNo1, renderNo2)).to.equal(true);
+		expect(isPixelEqual(renderNo1, renderNo2)).to.equal(true);
 	});
 
 	it('should not render the same', async () => {
@@ -47,13 +46,13 @@ describe('Background color', () => {
 
 		const renderNo2 = await snapshot(app.view);
 
-		expect(equal(renderNo1, renderNo2)).to.equal(false);
+		expect(isPixelEqual(renderNo1, renderNo2)).to.equal(false);
 
 		dragon.update(1.5);
 
 		const renderNo3 = await snapshot(app.view);
 
-		expect(equal(renderNo3, rotate1dot5Snapshot )).to.equal(true);
+		expect(isPixelEqual(renderNo3, rotate1dot5Snapshot )).to.equal(true);
 
 	});
 });
