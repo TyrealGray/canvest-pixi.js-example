@@ -1,2 +1,2 @@
 # canvest-prototype
-Canvest prototype
+Canvest example code for testing prototype

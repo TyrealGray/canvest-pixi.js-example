@@ -14,7 +14,7 @@
     "@babel/core": "^7.9.0",
     "@babel/polyfill": "7.8.7",
     "@babel/preset-env": "^7.9.5",
-    "@canvest/canvest-dev-server": "0.0.6",
+    "@canvest/canvest-dev-server": "0.0.7",
     "babel-loader": "^8.1.0",
     "core-js": "3.6.0",
     "webpack": "^4.43.0",

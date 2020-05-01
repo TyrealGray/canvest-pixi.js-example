@@ -1,10 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { Dragon } from '../src/dragon';
 
-describe('Background color', () => {
+describe('Dragon class', () => {
 
 	let rotate1dot5Snapshot = null;
-
 	it('should render the same', async () => {
 
 		const app = new PIXI.Application({
@@ -35,8 +34,6 @@ describe('Background color', () => {
 			preserveDrawingBuffer: true
 		});
 
-		const renderNo1 = await snapshot(app.view);
-
 		const container = new PIXI.Container();
 		container.width = 800;
 		container.height = 600;
@@ -44,15 +41,19 @@ describe('Background color', () => {
 		app.stage.addChild(container);
 		dragon.update(0.0);
 
+		const renderNo1 = await snapshot(app.view);
+
+		dragon.update(1.4);
+
 		const renderNo2 = await snapshot(app.view);
 
-		expect(isPixelEqual(renderNo1, renderNo2)).to.equal(false);
+		expect( isPixelEqual(renderNo1, renderNo2)).to.equal(false);
 
 		dragon.update(1.5);
 
 		const renderNo3 = await snapshot(app.view);
 
-		expect(isPixelEqual(renderNo3, rotate1dot5Snapshot )).to.equal(true);
+		expect( isPixelEqual(renderNo3, rotate1dot5Snapshot)).to.equal(true);
 
 	});
 });
