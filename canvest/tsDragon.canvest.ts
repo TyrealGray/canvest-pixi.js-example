@@ -1,16 +1,17 @@
+//@ts-nocheck
 import * as PIXI from 'pixi.js';
-import { Dragon } from '../src/dragon';
+import { Dragon } from '../src/tsDragon';
 
-describe('Dragon class', () => {
+describe('Typescript test Dragon class', () => {
 
 	it('should render the same', async () => {
 
-		const app = new PIXI.Application({
+		const app:PIXI.Application = new PIXI.Application({
 			width: 800, height: 600, backgroundColor: 0x1099bb,
 			preserveDrawingBuffer: true
 		});
 
-		const container = new PIXI.Container();
+		const container:PIXI.Container = new PIXI.Container();
 		container.width = 800;
 		container.height = 600;
 		const dragon = new Dragon(container);
