@@ -1,4 +1,3 @@
-//@ts-nocheck
 import * as PIXI from 'pixi.js';
 import { Dragon } from '../src/tsDragon';
 
