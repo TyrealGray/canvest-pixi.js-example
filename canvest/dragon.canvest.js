@@ -32,6 +32,12 @@ describe('Dragon class', () => {
 		const renderNo2 = await snapshot(app.view);
 
 		renderNo1.isEqual(renderNo2);
+
+		dragon.sprite.x += 1;
+
+		const renderNo3 = await snapshot(app.view);
+
+		renderNo1.isMatch(renderNo3, 0.1);
 	});
 
 	it('should not render the same', async () => {
