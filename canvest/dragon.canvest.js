@@ -13,11 +13,21 @@ describe('Dragon class', () => {
 		const container = new PIXI.Container();
 		container.width = 800;
 		container.height = 600;
-		const dragon = new Dragon(container);
+		let dragon = new Dragon(container);
 		app.stage.addChild(container);
 		dragon.update(1.5);
 
 		const renderNo1 = await snapshot(app.view);
+
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		dragon = new Dragon(container);
+
+		dragon.update(1.5);
+		dragon.sprite.x += 1;
 
 		const renderNo2 = await snapshot(app.view);
 
@@ -34,17 +44,31 @@ describe('Dragon class', () => {
 		const container = new PIXI.Container();
 		container.width = 800;
 		container.height = 600;
-		const dragon = new Dragon(container);
+		let dragon = new Dragon(container);
 		app.stage.addChild(container);
 		dragon.update(0.0);
 
 		const renderNo1 = await snapshot(app.view);
 
-		dragon.update(1.4);
+		dragon.update(1.5);
 
 		const renderNo2 = await snapshot(app.view);
 
 		renderNo1.notEqual(renderNo2);
 
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		new Dragon(container);
+		dragon = new Dragon(container);
+
+		dragon.update(1.4);
+
+		dragon.sprite.x += 2;
+
+		const renderNo3 = await snapshot(app.view);
+
+		renderNo2.notEqual(renderNo3);
 	});
 });
