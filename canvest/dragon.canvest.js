@@ -27,7 +27,6 @@ describe('Dragon class', () => {
 		dragon = new Dragon(container);
 
 		dragon.update(1.5);
-		dragon.sprite.x += 1;
 
 		const renderNo2 = await snapshot(app.view);
 
@@ -38,6 +37,8 @@ describe('Dragon class', () => {
 		const renderNo3 = await snapshot(app.view);
 
 		renderNo1.isMatch(renderNo3, 0.1);
+
+		await autoShot('blank', app.view);
 	});
 
 	it('should not render the same', async () => {
