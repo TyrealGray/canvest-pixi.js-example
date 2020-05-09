@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { Dragon } from '../src/tsDragon';
 
-describe('Typescript test Dragon class', () => {
+describe('Typescript test case', () => {
 
-	it('should render the same', async () => {
+	it('should render same', async () => {
 
 		const app:PIXI.Application = new PIXI.Application({
 			width: 800, height: 600, backgroundColor: 0x1099bb,
@@ -24,7 +24,7 @@ describe('Typescript test Dragon class', () => {
 		renderNo1.isEqual(renderNo2);
 	});
 
-	it('should not render the same', async () => {
+	it('should not render same', async () => {
 
 		const app = new PIXI.Application({
 			width: 800, height: 600, backgroundColor: 0x1099bb,

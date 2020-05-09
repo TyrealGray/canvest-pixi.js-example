@@ -1,2 +1,7 @@
-# canvest-prototype
-Canvest example code for testing prototype
+# canvest-pixi.js-example
+Canvest example for testing pixi.js
+
+### install and run
+```
+$ npm i && npm test
+```
