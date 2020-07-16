@@ -1,5 +1,5 @@
 # canvest-pixi.js-example
-Canvest example for testing pixi.js
+[Canvest](https://github.com/TyrealGray/Canvest) example for testing pixi.js
 
 ### install and run
 ```
