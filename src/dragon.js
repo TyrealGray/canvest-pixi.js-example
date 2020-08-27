@@ -13,4 +13,8 @@ export class Dragon {
 	update(delta){
 		this.sprite.rotation = delta;
 	}
+
+	unrun(){
+		return 123;
+	}
 }
